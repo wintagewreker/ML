@@ -1,0 +1,33 @@
+1. import pandas as pd
+2. df=pd.read_csv('Admission_Predict.csv',sep=',')
+3. df.columns=df.columns.str.rstrip()
+4. df.loc[df['Chance of Admit'] >=0.80,'Chance of Admit']=1
+5. df.loc[df['Chance of Admit'] < 0.80,'Chance of Admit']=0
+6. df=df.drop('Serial No.',axis=1)
+7. X = df.iloc[:,0:7].values
+8. y=df.iloc[:,7].values
+9. from sklearn.model_selection import train_test_split,StratifiedKFold,cross_val_score
+10. X_train,X_test,y_train,y_test= train_test_split(X,y,test_size=0.25,random_state=42)
+11. from sklearn.tree import DecisionTreeClassifier
+12. model = DecisionTreeClassifier(criterion='entropy')
+13. model.fit(X_train,y_train)
+14. y_pred=model.predict(X_test)
+15. from sklearn.metrics import confusion_matrix
+16. matrix=confusion_matrix(y_test,y_pred,labels=[0.0,1.0])
+17. from sklearn.metrics import accuracy_score
+18. acc = accuracy_score(y_test,y_pred)
+19. from sklearn.metrics import classification_report
+20. cr =classification_report(y_test,y_pred)
+21. feature_names=df.columns[0:7]
+22. class_names=[str(x) for x in model.classes_]
+23. from sklearn.tree import plot_tree
+24. pip install graphviz
+25. import graphviz
+26. dot_data = tree.export_graphviz(model,out_file=None, feature_names=feature_names)
+27. graph=graphviz.Source(dot_data,format="png")
+28. sf = StratifiedKFold(n_splits=5,shuffle=True,random_state=0)
+29. for d in depth :
+30. score = cross_val_score(tree.DecisionTreeClassifier(criterion='entropy',max_depth=d),X,y,cv=sf)
+31. score.mean()
+32. for i in range(1,11):
+33. dtree=DecisionTreeClassifier(criteria='gini',max_depth=i)

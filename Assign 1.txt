@@ -1,0 +1,57 @@
+1. import pandas as pd
+2. df = pd.read_csv("heart1.csv")
+3. df.shape
+4. df
+5. print(df.to_string())
+6. df.head()
+7. df.head(7)
+8. df.tail()
+9. df.tail(3)
+10. df.info()
+11. df.describe()
+12. df.dtypes
+13. df['age'].mean()
+14. df['chol'].median()
+15. df['trestbps'].min()
+16. df['trestbps'].max()
+17. df[df==0].count()
+18. df['age'].sum()
+19. df['age'].count()
+20. df.isna()
+21. df.isnull().sum()
+22. df=df.fillna(df.median())
+23. df.isna().sum()
+24. df.duplicated()
+25. df.duplicated().sum()
+26. df=df.drop_duplicates()
+27. df
+28. df.dtypes
+29. df=df.astype({'trestbps':'int','oldpeak':'int'})
+30. df.dtypes
+31. import matplotlib.pyplot as plt
+32. from sklearn.model_selection import train_test_split
+33. x=df.drop('target',axis='columns')
+34. y=df['target']
+35. x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.25)
+36. x_train.shape
+37. x_test.shape
+38. y_train.shape
+39. y_test.shape
+40. from sklearn.linear_model import LogisticRegression
+41. reg = LogisticRegression()
+42. reg.fit(x_train,y_train)
+43. y_predict=reg.predict(x_test)
+44. y_predict.shape
+45. from sklearn.metrics import accuracy_score
+46. print(accuracy_score(y_test,y_predict))
+47. from sklearn.metrics import classification_report
+48. print(classification_report(y_test,y_predict))
+49. from sklearn.metrics import confusion_matrix
+50. print(confusion_matrix(y_test,y_predict))
+51. import seaborn as sns
+52. sns.heatmap(confusion_matrix(y_test,y_predict),annot=True)
+53. import matplotlib.pyplot as plt
+54. x=df['age']
+55. y=df['target']
+56. plt.scatter(x,y)
+57. `plt.
